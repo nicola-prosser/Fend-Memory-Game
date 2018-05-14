@@ -4,8 +4,13 @@
 let cards = document.getElementsByClassName("card");
 let allCards = [...cards];
 
+//arrays for opened cards + matched cards
 let open = [];
 let match = [];
+
+//moves
+let moves = document.querySelector(".moves");
+let moveCounter = 0;
 
 /*
  * Display the cards on the page
@@ -31,26 +36,42 @@ function shuffle(array) {
 }
 
 // Restart Button
+const restart = document.getElementById("restart");
 
 function restartBtn(){
-    shuffle(allCards);
-    let deck = document.getElementById("deck");
-    let deckSize = deck.childNodes.length;
-
-    for(let i=0; i < deckSize; i++) {
-      deck.removeChild(deck.firstChild);
-    }
-    for(card in allCards){
-      console.log(allCards[card]);
-      deck.appendChild(allCards[card]);
-
+  dealCards();
+  //close cards over again - element.classList.remove();
+  //remove star rating
+  //reset move moveCounter
+  //reset timer
     }
 }
-
-// Restart Button Click event
-
-const restart = document.getElementById("restart");
 restart.addEventListener("click", restartBtn);
+
+//start game
+
+function dealCards(){
+  shuffle(allCards);
+  let deck = document.getElementById("deck");
+  let deckSize = deck.childNodes.length;
+
+  for(let i=0; i < deckSize; i++) {
+    deck.removeChild(deck.firstChild);
+  }
+  for(card in allCards){
+  deck.appendChild(allCards[card]);
+}
+
+document.onload = dealCards();
+
+//Move counter
+function playerMoves () {
+    moveCounter++;
+    moves.innerHTML = moveNumber;
+    if (moveNumber === 1) {
+        startTimer();
+    }
+};
 
 // Flip the cards over on click
 
@@ -79,12 +100,14 @@ function flip(evt) {
       card.classList.remove("show" , "open");
       open[0].classList.remove("show" , "open");
       open.pop();
-    }, 1500);
+    }, 1000);
     }
 
   } else {
     open.push(card);
   };
+
+  playerMoves();
 };
 
 
