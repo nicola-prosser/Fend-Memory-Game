@@ -112,8 +112,6 @@ restart.addEventListener("click", function(){
       counter.innerHTML = playerMoves + " Move";
     } else {
       counter.innerHTML = playerMoves + " Moves";
-    } if(playerMoves === 1){
-      beginTime();
     }
     ratePlayer();
   }
@@ -129,19 +127,18 @@ timeContainer.innerHTML = `00:00`
 
 function beginTime(){
     playerStarted = true;
-    Interval = setInterval ( function () {
-      
+    Interval = setInterval(function() {
         seconds++;
         if (seconds <= 9) {
             timeContainer.innerHTML = `0${minutes}:0${seconds}`;
         } else if (sec == 59) {
-            sec = 0;
-            setTimeout ( function () {
+            seconds = 0;
+            setTimeout (function () {
                 minutes++;
-                minutes.innerHTML = min;
+                timeContainer.innerHTML = minutes;
             }, 1000);
         } else {
-            seconds.innerHTML = sec;
+            timeContainer.innerHTML = seconds;
             }
 //         if (sec === 60) {
 //                min++;
