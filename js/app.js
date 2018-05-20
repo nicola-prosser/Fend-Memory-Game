@@ -39,6 +39,7 @@ function click(card) {
          card.classList.add("open", "show", "freeze");
          openCards.push(this);
          compareCards(firstCard, secondCard);
+
        } else {
          //if this is the first card to be clicked then ->
          card.classList.add("open", "show", "freeze");
@@ -73,20 +74,39 @@ function compareCards(firstCard, secondCard){
         openCards = [];
       }, 500);
   }
+  countMoves();
 }
 
 //restart
-function restartBtn(){
-    for(let i=0; i < cardIcons.length; i++) {
-      deck.innerHTML = "";
-    }
-    matched = [];
-    openCards = [];
-    startGame();
-}
-
 const restart = document.getElementById("restart");
-restart.addEventListener("click", restartBtn);
+restart.addEventListener("click", function(){
+    //remove deck of cards
+      for(let i=0; i < cardIcons.length; i++) {
+        deckOfCards.innerHTML = "";
+      }
+      //clear arrays
+      matched = [];
+      openCards = [];
+      //restart the game
+      startGame();
+  });
+
+  //Count moves
+  const counter = document.querySelector(".moves");
+  let playerMoves = 0;
+  counter.innerHTML = playerMoves + " Moves"
+  function countMoves(){
+    playerMoves++;
+    if(playerMoves === 1){
+      counter.innerHTML = playerMoves + " Move";
+    }else {
+      counter.innerHTML = playerMoves + " Moves";
+    }
+  }
+
+  //Rating system
+
+
 
   // Shuffle function from http://stackoverflow.com/a/2450976
   function shuffle(array) {
