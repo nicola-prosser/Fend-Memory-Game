@@ -23,6 +23,7 @@ function startGame() {
     deckOfCards.appendChild(card);
     click(card);
     shuffle(cardIcons);
+    beginTime();
     }
   }
 
@@ -66,7 +67,6 @@ function compareCards(firstCard, secondCard){
     secondCard.classList.add("match", "freeze");
     matched.push(firstCard, secondCard);
     openCards = [];
-
     //all cards are matched.
     win()
 
@@ -81,7 +81,7 @@ function compareCards(firstCard, secondCard){
   countMoves();
 }
 
-//restart the game
+//----------------------------Restart button---------------------------------//
 const restart = document.getElementById("restart");
 restart.addEventListener("click", function(){
     //remove deck of cards
@@ -124,12 +124,13 @@ let seconds = 0;
 const GameTimerContainer = document.querySelector(".time");
 
 function beginTime(){
-    gameRunning = true)
+    gameRunning = true;
     Interval = setInterval (function () {
         seconds++;}, 1000);
-    }
-  GameTimerContainer.innerHTML = `${seconds}s`
-}
+    };
+
+GameTimerContainer.innerHTML = `${seconds}s`
+
 
 //----------------------------Rating System---------------------------------//
   const starRating = document.querySelector(".stars");
