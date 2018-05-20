@@ -11,6 +11,7 @@ const cardIcons = ["fa fa-diamond","fa fa-paper-plane-o","fa fa-anchor", "fa fa-
 const deckOfCards = document.querySelector(".deck");
 let openCards = [];
 let matched = [];
+let gameRunning = false;
 
 // GAME SET UP: This code builds the li elements for the cards, applys classes and adds the click event listeners
 
@@ -21,7 +22,7 @@ function startGame() {
     card.innerHTML = `<i class="${cardIcons[i]}"></i>`;
     deckOfCards.appendChild(card);
     click(card);
-    //shuffle(cardIcons);
+    shuffle(cardIcons);
     }
   }
 
@@ -80,7 +81,7 @@ function compareCards(firstCard, secondCard){
   countMoves();
 }
 
-//restart
+//restart the game
 const restart = document.getElementById("restart");
 restart.addEventListener("click", function(){
     //remove deck of cards
@@ -110,6 +111,7 @@ restart.addEventListener("click", function(){
     playerMoves++;
     if(playerMoves === 1){
       counter.innerHTML = playerMoves + " Move";
+      beginTime();
     } else {
       counter.innerHTML = playerMoves + " Moves";
     }
@@ -117,51 +119,29 @@ restart.addEventListener("click", function(){
   }
 
 //----------------------------Timer---------------------------------//
-let gameTimer = 0;
-let seconds = 0;
 let minutes = 0;
-let playerStarted = false;
-
-const timeContainer = document.querySelector(".time");
-timeContainer.innerHTML = `00:00`
+let seconds = 0;
+const GameTimerContainer = document.querySelector(".time");
 
 function beginTime(){
-    playerStarted = true;
-    Interval = setInterval(function() {
-        seconds++;
-        if (seconds <= 9) {
-            timeContainer.innerHTML = `0${minutes}:0${seconds}`;
-        } else if (sec == 59) {
-            seconds = 0;
-            setTimeout (function () {
-                minutes++;
-                timeContainer.innerHTML = minutes;
-            }, 1000);
-        } else {
-            timeContainer.innerHTML = seconds;
-            }
-//         if (sec === 60) {
-//                min++;
-//                sec = 0;
-//                minutes.innerHTML = min;
-//        }
-    }, 1000);
+    gameRunning = true)
+    Interval = setInterval (function () {
+        seconds++;}, 1000);
+    }
+  GameTimerContainer.innerHTML = `${seconds}s`
 }
-
-
-
 
 //----------------------------Rating System---------------------------------//
   const starRating = document.querySelector(".stars");
   function ratePlayer() {
 
     switch (playerMoves) {
-      case 4: starRating.innerHTML = `
+      case 20: starRating.innerHTML = `
           <li><i class="fa fa-star"></i></li>
           <li><i class="fa fa-star"></i></li>`;
         break;
 
-      case 8: starRating.innerHTML = `
+      case 28: starRating.innerHTML = `
           <li><i class="fa fa-star"></i></li>`;
         break;
         }
@@ -172,7 +152,6 @@ function beginTime(){
 // Shuffle function from http://stackoverflow.com/a/2450976
   function shuffle(array) {
       var currentIndex = array.length, temporaryValue, randomIndex;
-      console.log("anything");
 
       while (currentIndex !== 0) {
           randomIndex = Math.floor(Math.random() * currentIndex);
