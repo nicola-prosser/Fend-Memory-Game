@@ -7,74 +7,88 @@ const deckOfCards = document.querySelector(".deck");
 let openCards = [];
 let matched = [];
 
-// Display the cards on the page - loop through create HTML add to the page
+// This code builds the li elements for the cards, applys classes and adds the click event listeners
 
- for(let i = 0; i < cardIcons.length; i++) {
-   const card = document.createElement("li");
-   card.classList.add("card");
-   card.innerHTML = `<i class="${cardIcons[i]}"></i>`;
-   deckOfCards.appendChild(card);
+function startGame() {
+  for(let i = 0; i < cardIcons.length; i++) {
+    const card = document.createElement("li");
+    card.classList.add("card");
+    card.innerHTML = `<i class="${cardIcons[i]}"></i>`;
+    deckOfCards.appendChild(card);
+    click(card);
 
-   //click a card
-   card.addEventListener("click", function() {
-
-
-
-     if(openCards.length === 1){
-       const firstCard = openCards[0];
-       const secondCard = this;
-       card.classList.add("open", "show");
-       openCards.push(this);
-
-       //compare cards
-       if(secondCard.innerHTML === firstCard.innerHTML){
-
-         firstCard.classList.add("match");
-         secondCard.classList.add("match");
-         openCards = [];
-         matched.push(firstCard, secondCard);
-
-         win()
-
-       } else {
-         firstCard.classList.remove("open", "show");
-         secondCard.classList.remove("open", "show");
-         openCards = [];
-         console.log("no Match");
-       }
-
-     } else {
-       card.classList.add("open", "show");
-       openCards.push(this);
-     }
-
-   });
- }
-
- function win() {
-   if(matched.length === 16){
-     alert("You Win!");
-   }
- }
-
-
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-    console.log("anything");
-
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-
-    return array;
+}
 }
 
+//---------start game---------\\
+startGame();
 
+
+//the click function adds compares the card classes to dertermin if they are matched or not.
+
+function click(card) {
+
+     //click a card
+     card.addEventListener("click", function() {
+       //add cards to an open card array to prepare to compare them
+       if(openCards.length === 1){
+         //if one card has aready been clicked then ->
+         const firstCard = openCards[0];
+         const secondCard = this;
+         card.classList.add("open", "show");
+         openCards.push(this);
+         compareCards(firstCard, secondCard);
+       } else {
+         //if this is the first card to be clicked then ->
+         card.classList.add("open", "show");
+         openCards.push(this);
+       }
+     });
+   }
+
+//The Win function determins if all cards have been matched, if so the game ends.
+   function win() {
+     if(matched.length === 16){
+       alert("You Win!");
+     }
+   }
+
+//compare cards + add match class if the are the same
+function compareCards(firstCard, secondCard){
+  if(secondCard.innerHTML === firstCard.innerHTML) {
+    firstCard.classList.add("match");
+    secondCard.classList.add("match");
+    matched.push(firstCard, secondCard);
+    openCards = [];
+
+    //all cards are matched.
+    win()
+
+    } else {
+      //delay the card then return to closed
+      setTimeout(function() {
+        firstCard.classList.remove("open", "show");
+        secondCard.classList.remove("open", "show");
+        openCards = [];
+      }, 500);
+  }
+}
+
+  // Shuffle function from http://stackoverflow.com/a/2450976
+  function shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+      console.log("anything");
+
+      while (currentIndex !== 0) {
+          randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex -= 1;
+          temporaryValue = array[currentIndex];
+          array[currentIndex] = array[randomIndex];
+          array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+  }
 
 /*
  * set up the event listener for a card. If a card is clicked:
