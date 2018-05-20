@@ -1,13 +1,18 @@
 /*
- * Create a list that holds all of your cards
- */
+ a lot of credit and appreciation goes to the Study Jam on the 19/4/18, especially Yahya Elharony because while I understood the steps I didnt't quite have my head around how to put them all together. The Study Jam was a huge help and removed a huge amount of stress. Thank you.
+*/
+
+//----------------------------Code Below ---------------------------------//
+
+//Create a list that holds all of your cards
+
 const cardIcons = ["fa fa-diamond","fa fa-paper-plane-o","fa fa-anchor", "fa fa-bolt", "fa fa-cube","fa fa-leaf","fa fa-bicycle", "fa fa-bomb","fa fa-diamond","fa fa-paper-plane-o","fa fa-anchor", "fa fa-bolt", "fa fa-cube","fa fa-leaf","fa fa-bicycle", "fa fa-bomb"];
 
 const deckOfCards = document.querySelector(".deck");
 let openCards = [];
 let matched = [];
 
-// This code builds the li elements for the cards, applys classes and adds the click event listeners
+// GAME SET UP: This code builds the li elements for the cards, applys classes and adds the click event listeners
 
 function startGame() {
   for(let i = 0; i < cardIcons.length; i++) {
@@ -17,18 +22,16 @@ function startGame() {
     deckOfCards.appendChild(card);
     click(card);
     //shuffle(cardIcons);
+    }
+  }
 
-}
-}
+//call start game
 
-//---------start game---------\\
 startGame();
-
 
 //the click function adds compares the card classes to dertermin if they are matched or not.
 
 function click(card) {
-
      //click a card
      card.addEventListener("click", function() {
        //add cards to an open card array to prepare to compare them
@@ -46,9 +49,9 @@ function click(card) {
          openCards.push(this);
        }
      });
-   }
+  }
 
-//The Win function determins if all cards have been matched, if so the game ends.
+//The Win function determins if all cards have been matched, if so the game ends and the modal is prompted.
    function win() {
      if(matched.length === 16){
        alert("You Win!");
@@ -87,28 +90,89 @@ restart.addEventListener("click", function(){
       //clear arrays
       matched = [];
       openCards = [];
+      playerMoves = 0;
+      starRating.innerHTML = `
+          <li><i class="fa fa-star"></i></li>
+          <li><i class="fa fa-star"></i></li>
+          <li><i class="fa fa-star"></i></li>`;
+      counter.innerHTML = playerMoves + " Moves"
       //restart the game
       startGame();
   });
 
-  //Count moves
+//----------------------------Count Moves ---------------------------------//
+
   const counter = document.querySelector(".moves");
   let playerMoves = 0;
   counter.innerHTML = playerMoves + " Moves"
+
   function countMoves(){
     playerMoves++;
     if(playerMoves === 1){
       counter.innerHTML = playerMoves + " Move";
-    }else {
+    } else {
       counter.innerHTML = playerMoves + " Moves";
+    } if(playerMoves === 1){
+      beginTime();
     }
+    ratePlayer();
   }
 
-  //Rating system
+//----------------------------Timer---------------------------------//
+let gameTimer = 0;
+let seconds = 0;
+let minutes = 0;
+let playerStarted = false;
+
+const timeContainer = document.querySelector(".time");
+timeContainer.innerHTML = `00:00`
+
+function beginTime(){
+    playerStarted = true;
+    Interval = setInterval ( function () {
+      
+        seconds++;
+        if (seconds <= 9) {
+            timeContainer.innerHTML = `0${minutes}:0${seconds}`;
+        } else if (sec == 59) {
+            sec = 0;
+            setTimeout ( function () {
+                minutes++;
+                minutes.innerHTML = min;
+            }, 1000);
+        } else {
+            seconds.innerHTML = sec;
+            }
+//         if (sec === 60) {
+//                min++;
+//                sec = 0;
+//                minutes.innerHTML = min;
+//        }
+    }, 1000);
+}
 
 
 
-  // Shuffle function from http://stackoverflow.com/a/2450976
+
+//----------------------------Rating System---------------------------------//
+  const starRating = document.querySelector(".stars");
+  function ratePlayer() {
+
+    switch (playerMoves) {
+      case 4: starRating.innerHTML = `
+          <li><i class="fa fa-star"></i></li>
+          <li><i class="fa fa-star"></i></li>`;
+        break;
+
+      case 8: starRating.innerHTML = `
+          <li><i class="fa fa-star"></i></li>`;
+        break;
+        }
+  }
+
+//----------------------------Provided Code Below ---------------------------------//
+
+// Shuffle function from http://stackoverflow.com/a/2450976
   function shuffle(array) {
       var currentIndex = array.length, temporaryValue, randomIndex;
       console.log("anything");
@@ -123,14 +187,3 @@ restart.addEventListener("click", function(){
 
       return array;
   }
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
