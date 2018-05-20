@@ -16,6 +16,7 @@ function startGame() {
     card.innerHTML = `<i class="${cardIcons[i]}"></i>`;
     deckOfCards.appendChild(card);
     click(card);
+    //shuffle(cardIcons);
 
 }
 }
@@ -35,12 +36,12 @@ function click(card) {
          //if one card has aready been clicked then ->
          const firstCard = openCards[0];
          const secondCard = this;
-         card.classList.add("open", "show");
+         card.classList.add("open", "show", "freeze");
          openCards.push(this);
          compareCards(firstCard, secondCard);
        } else {
          //if this is the first card to be clicked then ->
-         card.classList.add("open", "show");
+         card.classList.add("open", "show", "freeze");
          openCards.push(this);
        }
      });
@@ -56,8 +57,8 @@ function click(card) {
 //compare cards + add match class if the are the same
 function compareCards(firstCard, secondCard){
   if(secondCard.innerHTML === firstCard.innerHTML) {
-    firstCard.classList.add("match");
-    secondCard.classList.add("match");
+    firstCard.classList.add("match", "freeze");
+    secondCard.classList.add("match", "freeze");
     matched.push(firstCard, secondCard);
     openCards = [];
 
@@ -67,12 +68,25 @@ function compareCards(firstCard, secondCard){
     } else {
       //delay the card then return to closed
       setTimeout(function() {
-        firstCard.classList.remove("open", "show");
-        secondCard.classList.remove("open", "show");
+        firstCard.classList.remove("open", "show", "freeze");
+        secondCard.classList.remove("open", "show", "freeze");
         openCards = [];
       }, 500);
   }
 }
+
+//restart
+function restartBtn(){
+    for(let i=0; i < cardIcons.length; i++) {
+      deck.innerHTML = "";
+    }
+    matched = [];
+    openCards = [];
+    startGame();
+}
+
+const restart = document.getElementById("restart");
+restart.addEventListener("click", restartBtn);
 
   // Shuffle function from http://stackoverflow.com/a/2450976
   function shuffle(array) {
