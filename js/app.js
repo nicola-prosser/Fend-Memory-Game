@@ -1,18 +1,62 @@
 /*
  * Create a list that holds all of your cards
  */
-let cards = document.getElementsByClassName("card");
-let allCards = [...cards];
+const cardIcons = ["fa fa-diamond","fa fa-paper-plane-o","fa fa-anchor", "fa fa-bolt", "fa fa-cube","fa fa-leaf","fa fa-bicycle", "fa fa-bomb","fa fa-diamond","fa fa-paper-plane-o","fa fa-anchor", "fa fa-bolt", "fa fa-cube","fa fa-leaf","fa fa-bicycle", "fa fa-bomb"];
 
-let open = [];
-let match = [];
+const deckOfCards = document.querySelector(".deck");
+let openCards = [];
+let matched = [];
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+// Display the cards on the page - loop through create HTML add to the page
+
+ for(let i = 0; i < cardIcons.length; i++) {
+   const card = document.createElement("li");
+   card.classList.add("card");
+   card.innerHTML = `<i class="${cardIcons[i]}"></i>`;
+   deckOfCards.appendChild(card);
+
+   //click a card
+   card.addEventListener("click", function() {
+
+
+
+     if(openCards.length === 1){
+       const firstCard = openCards[0];
+       const secondCard = this;
+       card.classList.add("open", "show");
+       openCards.push(this);
+
+       //compare cards
+       if(secondCard.innerHTML === firstCard.innerHTML){
+
+         firstCard.classList.add("match");
+         secondCard.classList.add("match");
+         openCards = [];
+         matched.push(firstCard, secondCard);
+
+         win()
+
+       } else {
+         firstCard.classList.remove("open", "show");
+         secondCard.classList.remove("open", "show");
+         openCards = [];
+         console.log("no Match");
+       }
+
+     } else {
+       card.classList.add("open", "show");
+       openCards.push(this);
+     }
+
+   });
+ }
+
+ function win() {
+   if(matched.length === 16){
+     alert("You Win!");
+   }
+ }
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -30,62 +74,6 @@ function shuffle(array) {
     return array;
 }
 
-// Restart Button
-
-function restartBtn(){
-    shuffle(allCards);
-    let deck = document.getElementById("deck");
-    let deckSize = deck.childNodes.length;
-
-    for(let i=0; i < deckSize; i++) {
-      deck.removeChild(deck.firstChild);
-    }
-    for(card in allCards){
-      console.log(allCards[card]);
-      deck.appendChild(allCards[card]);
-
-    }
-}
-
-// Restart Button Click event
-
-const restart = document.getElementById("restart");
-restart.addEventListener("click", restartBtn);
-
-// Flip the cards over on click
-
-for(card in allCards) {
-  allCards[card].addEventListener("click", flip);
-};
-
-function flip(evt) {
-  let card = evt.target;
-  card.classList.add("show" , "open");
-
-  if (open.length > 0) {
-    if (open[0].firstElementChild.classList.value == card.firstElementChild.classList.value ) {
-      card.classList.remove("open");
-      open[0].classList.remove("open");
-      card.classList.add("match");
-      open[0].classList.add("match");
-      match.push(card);
-      match.push(open[0]);
-      open.pop();
-
-      console.log("something");
-    } else {
-      setTimeout(function() {
-
-      card.classList.remove("show" , "open");
-      open[0].classList.remove("show" , "open");
-      open.pop();
-    }, 1500);
-    }
-
-  } else {
-    open.push(card);
-  };
-};
 
 
 /*
