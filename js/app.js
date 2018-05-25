@@ -22,7 +22,7 @@ function startGame() {
     card.innerHTML = `<i class="${cardIcons[i]}"></i>`;
     deckOfCards.appendChild(card);
     click(card);
-    shuffle(cardIcons);
+    //shuffle(cardIcons);
     beginTime();
     }
   }
@@ -99,6 +99,7 @@ restart.addEventListener("click", function(){
       counter.innerHTML = playerMoves + " Moves"
       //restart the game
       startGame();
+      clearInterval(timer);
   });
 
 //----------------------------Count Moves ---------------------------------//
@@ -119,17 +120,37 @@ restart.addEventListener("click", function(){
   }
 
 //----------------------------Timer---------------------------------//
-let minutes = 0;
+let timer;
 let seconds = 0;
-const GameTimerContainer = document.querySelector(".time");
+let minutes = 0;
+const timerContainer = document.querySelector(".timer");
 
 function beginTime(){
-    gameRunning = true;
-    Interval = setInterval (function () {
-        seconds++;}, 1000);
-    };
+  let startTime = new Date().getTime();
 
-GameTimerContainer.innerHTML = `${seconds}s`
+  // Update the timer every second
+  timer = setInterval(function() {
+    var now = new Date().getTime();
+
+    // Find the time elapsed between now and start
+    var elapsed = now - startTime;
+
+    // Calculate minutes and seconds
+    let minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
+
+    // Add starting 0 if seconds < 10
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+
+    let currentTime = minutes + ":" + seconds;
+
+    // Update clock on game screen and modal
+    timeContainer.innerHTML = currentTime;
+  }, 750);
+}
+
 
 
 //----------------------------Rating System---------------------------------//
