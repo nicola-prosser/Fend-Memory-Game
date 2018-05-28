@@ -13,6 +13,14 @@ let openCards = [];
 let matched = [];
 let gameRunning = false;
 
+//variables for Timer
+let timer;
+let seconds = 0;
+let minutes = 0;
+const timerContainer = document.querySelector(".timer");
+let isFirstClick = true;
+
+
 // GAME SET UP: This code builds the li elements for the cards, applys classes and adds the click event listeners
 
 function startGame() {
@@ -27,7 +35,7 @@ function startGame() {
     }
   }
 
-//call start game
+//call start game to shuffle board on page load.
 
 startGame();
 
@@ -36,6 +44,13 @@ startGame();
 function click(card) {
      //click a card
      card.addEventListener("click", function() {
+
+       function FirstClick (card) {
+         if (isFirstClick) {
+           beginTime();
+           isFirstClick = false;
+         }
+       }
        //add cards to an open card array to prepare to compare them
        if(openCards.length === 1){
          //if one card has aready been clicked then ->
@@ -112,7 +127,6 @@ restart.addEventListener("click", function(){
     playerMoves++;
     if(playerMoves === 1){
       counter.innerHTML = playerMoves + " Move";
-      beginTime();
     } else {
       counter.innerHTML = playerMoves + " Moves";
     }
@@ -120,10 +134,6 @@ restart.addEventListener("click", function(){
   }
 
 //----------------------------Timer---------------------------------//
-let timer;
-let seconds = 0;
-let minutes = 0;
-const timerContainer = document.querySelector(".timer");
 
 function beginTime(){
   let startTime = new Date().getTime();
@@ -152,18 +162,17 @@ function beginTime(){
 }
 
 
-
 //----------------------------Rating System---------------------------------//
   const starRating = document.querySelector(".stars");
   function ratePlayer() {
 
     switch (playerMoves) {
-      case 20: starRating.innerHTML = `
+      case 12: starRating.innerHTML = `
           <li><i class="fa fa-star"></i></li>
           <li><i class="fa fa-star"></i></li>`;
         break;
 
-      case 28: starRating.innerHTML = `
+      case 20: starRating.innerHTML = `
           <li><i class="fa fa-star"></i></li>`;
         break;
         }
