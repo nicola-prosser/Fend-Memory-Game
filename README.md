@@ -5,7 +5,7 @@ This game has been created as part of Udacity's Front End nanodegree programme.
 ## Table of Contents
 
 * [Overview](#Overview)
-* [How to Play](#How to Play)
+* [Gameplay](#Gameplay)
 * [Contributing](#contributing)
 * [Acknowledgments](#Acknowledgments)
 
@@ -14,7 +14,7 @@ The memory game was the third project required for the nanodegree. The code for 
 
 The game includes shuffling the deck randomly with each restart, adding and removing classes to flip the cards when clicked, comparing the classes to see if they match and either flipping the cards back over or changing the colour to indicate a match. The game also has a timer, a score out of three stars, a move counter and a modal which is prompted when all cards are matched.
 
-## How to Play
+## Gameplay
 
 To win the game you must successfully match all the icons. The cards begin face down, when the first click takes place the timer starts and the game has begun. Find each pair of icons in the fewest moves possible.
 
