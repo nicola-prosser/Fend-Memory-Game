@@ -41,7 +41,7 @@ function startGame() {
     card.innerHTML = `<i class="${cardIcons[i]}"></i>`;
     deckOfCards.appendChild(card);
     click(card);
-    shuffle(cardIcons);
+    //shuffle(cardIcons);
     }
   }
 

@@ -136,7 +136,7 @@ h1 {
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 15px, 25px;
-  width: 350px;
+  width: 390px;
   border-radius: 10px;
 
 }
@@ -150,6 +150,7 @@ h1 {
 
 .close-button i {
   float: right;
+  margin-right: 20px;
 }
 
 .close-button:hover {
@@ -197,6 +198,11 @@ button:hover {
     visibility: visible;
     transform: scale(1.0);
     transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.inner-modal {
+  margin-left: 20px;
+  margin-bottom: 15px
 }
 
 @media screen and (min-width: 400px) and (max-width: 670px) {
