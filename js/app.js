@@ -215,14 +215,14 @@ function beginTime(){
 
     switch (playerMoves) {
       //from 3 stars to 2 stars
-      case 7:
+      case 12:
           playerStars = 2;
           starRating.innerHTML = `
           <li><i class="fa fa-star"></i></li>
           <li><i class="fa fa-star"></i></li>`;
         break;
       //from 2 stars to 1 star
-      case 11:
+      case 20:
           playerStars = 1;
           starRating.innerHTML = `
           <li><i class="fa fa-star"></i></li>`;
