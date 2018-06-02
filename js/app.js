@@ -35,13 +35,13 @@ const modalButton = document.querySelector('.modal-restart')
 // GAME SET UP: This code builds the li elements for the cards, applys classes and adds the click event listeners
 
 function startGame() {
+  shuffle(cardIcons);
   for(let i = 0; i < cardIcons.length; i++) {
     const card = document.createElement("li");
     card.classList.add("card");
     card.innerHTML = `<i class="${cardIcons[i]}"></i>`;
     deckOfCards.appendChild(card);
     click(card);
-    //shuffle(cardIcons);
     }
   }
 
