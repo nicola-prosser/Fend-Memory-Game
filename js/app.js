@@ -51,7 +51,7 @@ startGame();
 //----------------------------Count Moves ---------------------------------//
 
   const counter = document.querySelector(".moves");
-  counter.innerHTML = playerMoves + " Moves"
+  counter.innerHTML = playerMoves + " Moves";
 
   function countMoves(){
     playerMoves++;
@@ -114,13 +114,12 @@ function click(card) {
 
   function win() {
      if(matched.length === 16){
-       clearInterval(timer);;
-       winnerText.innerHTML = `You completed the game in ${playerMoves} and ${currentTime}`
-         for(let i=0; i <= playerStars; i++) {
-           debugger;
+       clearInterval(timer);
+       winnerText.innerHTML = `You completed the game in ${playerMoves} moves and a time of ${currentTime}.`
+         for(let i=1; i <= playerStars; i++) {
            modalRating.innerHTML += `<li><i class="fa fa-star"></i></li>`;
          }
-       toggleModal()
+       toggleModal();
      }
    }
 
@@ -132,7 +131,6 @@ function compareCards(firstCard, secondCard){
     matched.push(firstCard, secondCard);
     openCards = [];
     //all cards are matched.
-    win()
 
     } else {
       //delay the card then return to closed
@@ -143,6 +141,7 @@ function compareCards(firstCard, secondCard){
       }, 500);
   }
   countMoves();
+  win()
 }
 
 //----------------------------Restart button---------------------------------//
@@ -166,7 +165,10 @@ function restartGame () {
       clearInterval(timer);
       timerContainer.innerHTML = `00:00`;
       isFirstClick = true;
-  }
+      modalRating.innerHTML = ``;
+      playerStars = 3;
+    }
+
 
 restart.addEventListener("click", restartGame);
 
@@ -210,14 +212,14 @@ function beginTime(){
 
     switch (playerMoves) {
       //from 3 stars to 2 stars
-      case 4:
+      case 7:
           playerStars = 2;
           starRating.innerHTML = `
           <li><i class="fa fa-star"></i></li>
           <li><i class="fa fa-star"></i></li>`;
         break;
       //from 2 stars to 1 star
-      case 6:
+      case 11:
           playerStars = 1;
           starRating.innerHTML = `
           <li><i class="fa fa-star"></i></li>`;
@@ -241,3 +243,5 @@ function beginTime(){
 
       return array;
   }
+
+  //try freeze class idea if (classlist ===" match" do nothing or keep freeze)
