@@ -83,6 +83,8 @@ function click(card) {
          openCards.push(this);
          compareCards(firstCard, secondCard);
 
+       } else if (openCards.length >= 2){
+         //Do Nothing
        } else {
          //if this is the first card to be clicked then ->
          card.classList.add("open", "show", "freeze");
@@ -135,9 +137,10 @@ function compareCards(firstCard, secondCard){
     } else {
       //delay the card then return to closed
       setTimeout(function() {
+        openCards = [];
         firstCard.classList.remove("open", "show", "freeze");
         secondCard.classList.remove("open", "show", "freeze");
-        openCards = [];
+
       }, 500);
   }
   countMoves();
